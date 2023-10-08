@@ -14,7 +14,7 @@ int main(void)
 
 	while (ch <= 102)
 	{
-		putchar(num);
+		putchar(ch);
 		if (ch == 57)
 			ch += 39;
 		ch++;
