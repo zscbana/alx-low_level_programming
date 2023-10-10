@@ -1,13 +1,10 @@
 #include "main.h"
 /**
- * main - entry point
+ * print_alphabet - print from a to z
  *
- * Description: print from a to z
- *
- * Return: 0 success
 */
 
-print_alphabet(void)
+void print_alphabet(void)
 {
 	int c = 'a';
 
