@@ -1,5 +1,8 @@
 #include "main.h"
 
+int check_prime(int n, int oth);
+int is_prime_number(int n);
+
 /**
  * is_prime_number -function checks for prime number
  * @n: given number
