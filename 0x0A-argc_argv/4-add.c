@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+
 /**
  * main - print the sum of all positive numbers
  * @argc: number of arguments
@@ -7,35 +9,45 @@
  * Return: 0 for success, 1 for error
  */
 
-int main(int argc, char *argv)
+int main(int argc, char *argv[])
 {
-	int i = 1, positive = 0;
+	int i, num, sum = 0;
 
-		if (argc < 2)
+	if (argc < 2)
 	{
 		printf("0\n");
 	}
-	while (i < argc)
+	else
 	{
-		int num = atoi(argv[i]);
+		for (i = 1; i < argc; i++)
+		{
+			int j;
+			int valid = 1;
 
-		if (num == 0 && argv[i][0] != '0')
-		{
-			printf("Error\n");
-			return (1);
-		}
-		if (num > 0)
-		{
-			positive += num;
-		}
-		else
-		{
-			printf("Error\n");
-			return (1);
-		}
+			for (j = 0; argv[i][j] != '\0'; j++)
+			{
+				if (!isdigit(argv[i][j]))
+				{
+					valid = 0;
+					break;
+				}
+			}
 
-		i++;
+			if (valid)
+			{
+				num = atoi(argv[i]);
+				if (num >= 0)
+				{
+					sum = sum + num;
+				}
+			}
+			else
+			{
+				printf("Error\n");
+				return (1);
+			}
+		}
+		printf("%i\n", sum);
 	}
-	printf("%d\n", positive);
 	return (0);
 }
