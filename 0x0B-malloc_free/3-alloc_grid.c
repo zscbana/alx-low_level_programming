@@ -6,7 +6,7 @@
  * @width: width of array
  * @height: height of array
  *
- * Return: array of 2 dimation or null
+ * Return: array of 2 dimation array or null
  */
 
 int **alloc_grid(int width, int height)
@@ -24,14 +24,15 @@ int **alloc_grid(int width, int height)
 		for (i = 0; i < height; i++)
 		{
 			tab[i] = malloc(sizeof(**tab) * width);
-			if (tab[i] == 0)
+			if (tab[i] == NULL)
 			{
-				while (i--)
+				while (i > 0)
 				{
+					i--;
 					free(tab[i]);
-					free(tab);
-					return (NULL);
 				}
+				free(tab);
+				return (NULL);
 				for (j = 0; j < width; j++)
 				{
 					tab[i][j] = 0;
