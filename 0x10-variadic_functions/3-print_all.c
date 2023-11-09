@@ -1,59 +1,89 @@
 #include "variadic_functions.h"
-#include <stdarg.h>
-#include <stdio.h>
 
-void print_char(char *separator, va_list args)
+/**
+ * fochar - format char
+ * @separator: the string separator
+ * @ap: arg pointer
+ */
+
+void fochar(char *separator, va_list ap)
 {
-	printf("%s%c", separator, va_arg(args, int));
+	printf("%s%c", separator, va_arg(ap, int));
 }
 
-void print_int(char *separator, va_list args)
+/**
+ * focint - format int
+ * @separator: the int separator
+ * @ap: arg pointer
+ */
+
+void foint(char *separator, va_list ap)
 {
-	printf("%s%d", separator, va_arg(args, int));
-}
-void print_float(char *separator, va_list args)
-{
-	printf("%s%f", separator, va_arg(args, double));
+	printf("%s%d", separator, va_arg(ap, int));
 }
 
-void print_string(char *separator, va_list args)
+/**
+ * fofloat - format float
+ * @separator: the float separator
+ * @ap: arg pointer
+ */
+
+void fofloat(char *separator, va_list ap)
 {
-	char *str = va_arg(args, char *);
-	if (str == NULL)
-		str = "(nil)";
+	printf("%s%f", separator, va_arg(ap, double));
+}
+
+/**
+ * fostring - format string
+ * @separator: the string separator
+ * @ap: arg pointer
+ */
+
+void fostring(char *separator, va_list ap)
+{
+	char *str = va_arg(ap, char *);
+
+	switch ((int)(!str))
+	{
+	case 1:
+		str = ("nil");
+		break;
+	}
 	printf("%s%s", separator, str);
 }
 
-void print_all(const char *const format, ...)
+/**
+ * printall - print anything
+ * @format: the format string
+ */
+
+void printall(const char *const format, ...)
 {
-	token_t tokens[] = {
-		{"c", print_char},
-		{"i", print_int},
-		{"f", print_float},
-		{"s", print_string},
-		{NULL, NULL}};
-
-	va_list args;
-	unsigned int i = 0;
+	int i = 0, j;
 	char *separator = "";
-
-	va_start(args, format);
-
+	va_list ap;
+	token_t token[] = {
+			{"c", fochar},
+			{"i", foint},
+			{"f", fofloat},
+			{"s", fostring},
+			{NULL, NULL},
+		};
+	va_start(ap, format);
 	while (format && format[i])
 	{
-		unsigned int j = 0;
-		while (tokens[j].token)
+		j = 0;
+		while (token[j].token)
 		{
-			if (format[i] == *(tokens[j].token))
+			if (format[i] == token[j].token[0])
 			{
-				tokens[j].f(separator, args);
+				token[j].f(separator, ap);
 				separator = ", ";
 			}
 			j++;
 		}
 		i++;
 	}
-
-	va_end(args);
 	printf("\n");
+	va_end(ap);
 }
