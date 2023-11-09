@@ -43,11 +43,9 @@ void fostring(char *separator, va_list ap)
 {
 	char *str = va_arg(ap, char *);
 
-	switch ((int)(!str))
+	if (!str)
 	{
-	case 1:
-		str = ("nil");
-		break;
+		str = "(nil)";
 	}
 	printf("%s%s", separator, str);
 }
@@ -63,12 +61,12 @@ void printall(const char *const format, ...)
 	char *separator = "";
 	va_list ap;
 	token_t token[] = {
-			{"c", fochar},
-			{"i", foint},
-			{"f", fofloat},
-			{"s", fostring},
-			{NULL, NULL},
-		};
+		{"c", fochar},
+		{"i", foint},
+		{"f", fofloat},
+		{"s", fostring},
+		{NULL, NULL},
+	};
 	va_start(ap, format);
 	while (format && format[i])
 	{
