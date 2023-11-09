@@ -1,0 +1,6 @@
+#ifndef VARIADIC_FUNCATION_H
+#define VARIADIC_FUNCATION_H
+
+
+
+#endif
