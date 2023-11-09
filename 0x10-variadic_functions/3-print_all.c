@@ -1,51 +1,59 @@
 #include "variadic_functions.h"
+#include <stdarg.h>
+#include <stdio.h>
 
-/**
- * print_all -  a function that prints anything.
- * @format:
- * @...:
- */
+void print_char(char *separator, va_list args)
+{
+	printf("%s%c", separator, va_arg(args, int));
+}
+
+void print_int(char *separator, va_list args)
+{
+	printf("%s%d", separator, va_arg(args, int));
+}
+void print_float(char *separator, va_list args)
+{
+	printf("%s%f", separator, va_arg(args, double));
+}
+
+void print_string(char *separator, va_list args)
+{
+	char *str = va_arg(args, char *);
+	if (str == NULL)
+		str = "(nil)";
+	printf("%s%s", separator, str);
+}
 
 void print_all(const char *const format, ...)
 {
+	token_t tokens[] = {
+		{"c", print_char},
+		{"i", print_int},
+		{"f", print_float},
+		{"s", print_string},
+		{NULL, NULL}};
+
 	va_list args;
-	char *str;
 	unsigned int i = 0;
-	char c;
-	float f;
+	char *separator = "";
 
 	va_start(args, format);
 
 	while (format && format[i])
 	{
-		switch (format[i])
+		unsigned int j = 0;
+		while (tokens[j].token)
 		{
-
-		case 'c':
-			c = va_arg(args, int);
-			printf("%c", c);
-			break;
-		case 'i':
-			printf("%d", va_arg(args, int));
-			break;
-		case 'f':
-			f = va_arg(args, double);
-			printf("%f", f);
-			break;
-		case 's':
-			str = va_arg(args, char *);
-			if (str == NULL)
-				printf("(nil)");
-			else
-				printf("%s", str);
-			break;
+			if (format[i] == *(tokens[j].token))
+			{
+				tokens[j].f(separator, args);
+				separator = ", ";
+			}
+			j++;
 		}
-		if ((format[i] == 'c' || format[i] == 'i' || format[i] == 'f'
-		 || format[i] == 's') && format[i + 1])
-			printf(", ");
-
 		i++;
 	}
+
 	va_end(args);
 	printf("\n");
 }
