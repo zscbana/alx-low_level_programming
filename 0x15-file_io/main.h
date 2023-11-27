@@ -8,6 +8,6 @@
 #define READ_BUF_SIZE 1024
 
 int _putchar(char c);
-size_t read_textfile(const char *filename, size_t letters);
+ssize_t read_textfile(const char *filename, size_t letters);
 
 #endif
