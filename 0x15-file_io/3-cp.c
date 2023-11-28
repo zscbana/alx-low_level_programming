@@ -28,8 +28,8 @@ int main(int ac, char **av)
 	if (fd_to == -1)
 		dprintf(STDERR_FILENO, ERR_NOWRITE, av[2]), exit(99);
 	while ((b = read(fd_from, buf, READ_BUF_SIZE)) > 0)
-        if (write(fd_to, buf, b) < 0)
-            dprintf(STDERR_FILENO, ERR_NOWRITE, av[2]), exit(99);
+		if (write(fd_to, buf, b) != b)
+			dprintf(STDERR_FILENO, ERR_NOWRITE, av[2]), exit(99);
 	if (b == -1)
 		dprintf(STDERR_FILENO, ERR_NOREAD, av[1]), exit(98);
 	fd_from = close(fd_from);
@@ -37,6 +37,6 @@ int main(int ac, char **av)
 	if (fd_from)
 		dprintf(STDERR_FILENO, ERR_NOCLOSE, fd_from), exit(100);
 	if (fd_to)
-		dprintf(STDERR_FILENO, ERR_NOCLOSE, fd_to), exit(100);
+		dprintf(STDERR_FILENO, ERR_NOCLOSE, fd_from), exit(100);
 	return (0);
 }
