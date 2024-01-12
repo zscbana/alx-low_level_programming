@@ -45,6 +45,12 @@ node_t addlast(node_t head, int valu)
 	tmp->prev=tp;
 	return head;
 }
+
+node_t deletenode(node_t head, int idx)
+{
+
+	
+}
 int main(void)
 {
 	node_t head = NULL;
