@@ -16,7 +16,7 @@ int div(int a, int b)
 {
 	if (b == 0)
 	{
-		printf("Error: divison by zero\n");
+		printf("Error: Divison by zero\n");
 		return (0);
 	}
 	return (a / b);
@@ -25,7 +25,7 @@ int mod(int a, int b)
 {
 	if (b == 0)
 	{
-		printf("Error: divison by zero\n");
+		printf("Error: Divison by zero\n");
 		return (0);
 	}
 	return (a % b);
